@@ -10,6 +10,10 @@ organizationName := "andyglow"
 
 publishTo := sonatypePublishTo.value
 
+publishConfiguration := publishConfiguration.value.withOverwrite(true)
+
+publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+
 scalaVersion := "2.11.12"
 
 crossScalaVersions := Seq("2.12.8", "2.11.12")
