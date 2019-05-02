@@ -1,4 +1,5 @@
 import xerial.sbt.Sonatype._
+import ReleaseTransformations._
 
 name := "scalacheck-gen-configured"
 
@@ -62,6 +63,20 @@ developers := List(
 releaseCrossBuild := true
 
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  releaseStepCommandAndRemaining("+publishSigned"),
+  setNextVersion,
+  commitNextVersion,
+  releaseStepCommand("sonatypeReleaseAll"),
+  pushChanges)
 
 libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.14.0",
