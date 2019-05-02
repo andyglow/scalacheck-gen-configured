@@ -2,7 +2,7 @@ import xerial.sbt.Sonatype._
 
 name := "scalacheck-gen-configured"
 
-homepage := Some(new URL("http://github.com/andyglow/scalacheck-gen-configure"))
+homepage := Some(new URL("http://github.com/andyglow/scalacheck-gen-configured"))
 
 startYear := Some(2017)
 
@@ -40,13 +40,13 @@ publishMavenStyle := true
 sonatypeProjectHosting := Some(
   GitHubHosting(
     "andyglow",
-    "scala-jsonschema",
+    "scalacheck-gen-configured",
     "andyglow@gmail.com"))
 
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/andyglow/scala-jsonschema"),
-    "scm:git@github.com:andyglow/scala-jsonschema.git"))
+    url("https://github.com/andyglow/scalacheck-gen-configured"),
+    "scm:git@github.com:andyglow/scalacheck-gen-configured.git"))
 
 developers := List(
   Developer(
