@@ -4,8 +4,8 @@ import org.scalacheck.Gen
 
 import scala.util.control.NonFatal
 
-
 trait ForRange[T] {
+
   def apply(x: String): Either[String, Gen[T]]
 }
 
@@ -16,21 +16,21 @@ object ForRange {
     override def apply(x: String): Either[String, Gen[String]] = Left("range is not supported for strings")
   }
 
-  implicit val intFromString: ForRange[Int] = create(_.toInt)
-
-  implicit val longFromString: ForRange[Long] = create(_.toLong)
-
-  implicit val doubleFromString: ForRange[Double] = create(_.toDouble)
-
   implicit val booleanFromString: ForRange[Boolean] = new ForRange[Boolean] {
-    override def apply(x: String): Either[String, Gen[Boolean]] = Right(Gen.oneOf(true, false))
+    override def apply(x: String): Either[String, Gen[Boolean]] = Left("range is not supported for booleans")
+  }
+
+  implicit def rangeForConst[T: ForConst: Gen.Choose]: ForRange[T] = {
+    val fc = implicitly[ForConst[T]]
+
+    create(fc.crack)
   }
 
   private def create[T: Gen.Choose](fn: String => T): ForRange[T] = new ForRange[T] {
 
     override def apply(x: String): Either[String, Gen[T]] = x.split("\\.\\.") match {
       case Array(min, max) =>
-        try Right(Gen.choose(fn(min), fn(max)))
+        try Right(Gen.choose(fn(min.trim), fn(max.trim)))
         catch {
           case NonFatal(err) => Left(err.getMessage)
         }
