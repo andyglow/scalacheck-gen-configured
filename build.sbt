@@ -4,7 +4,7 @@ name := "scalacheck-gen-configured"
 
 homepage := Some(new URL("http://github.com/andyglow/scalacheck-gen-configured"))
 
-startYear := Some(2017)
+startYear := Some(2019)
 
 organizationName := "andyglow"
 
