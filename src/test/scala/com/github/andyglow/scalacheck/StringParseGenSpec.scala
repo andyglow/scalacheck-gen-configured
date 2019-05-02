@@ -115,7 +115,7 @@ class StringParseGenSpec extends WordSpec {
       str foreach checkChar
     }
 
-    "greater then 12 size defined" in {
+    "greater then 3 size defined" in {
       val str = doGen[String](s"$name: > 3").value
       str.length should be > 3
       checkHead(str.head)

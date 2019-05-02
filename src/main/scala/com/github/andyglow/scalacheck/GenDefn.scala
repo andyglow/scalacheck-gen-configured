@@ -52,7 +52,7 @@ object GenDefn {
 
       case GreaterThen(len) => for {
         c     <- firstCharGen
-        extra <- Gen.choose(0, 32)
+        extra <- Gen.choose(1, 32)
         cs    <- Gen.listOfN(len - 1 + extra, charGen)
       } yield (c :: cs).mkString
 
