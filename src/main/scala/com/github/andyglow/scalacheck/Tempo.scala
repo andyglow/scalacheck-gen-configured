@@ -53,7 +53,7 @@ private[andyglow] object Tempo {
   def parseInstant(x: String): Instant =
     parse(x)(
       Instant.ofEpochMilli,
-      LocalDateTime.parse(_, dateTimeFmt).toInstant(systemZoneOffset))
+      Instant.parse)
 
   def parseZonedDateTime(x: String): ZonedDateTime =
     parse(x)(

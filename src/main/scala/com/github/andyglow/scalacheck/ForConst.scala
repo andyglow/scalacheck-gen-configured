@@ -39,6 +39,8 @@ object ForConst {
 
   implicit val longFromString: ForConst[Long] = create(_.toLong)
 
+  implicit val floatFromString: ForConst[Float] = create(_.toFloat)
+
   implicit val doubleFromString: ForConst[Double] = create(_.toDouble)
 
   implicit val booleanFromString: ForConst[Boolean] = create(_.toBoolean)
@@ -70,9 +72,9 @@ object ForConst {
 
   implicit val dateFromString: ForConst[Date] = calendarFromString map { _.getTime }
 
-  implicit val sqlDateFromString: ForConst[java.sql.Date] = calendarFromString map { c => new java.sql.Date(c.getTimeInMillis) }
+  implicit val sqlDateFromString: ForConst[java.sql.Date] = localDateFromString map { java.sql.Date.valueOf }
 
-  implicit val sqlTimeFromString: ForConst[java.sql.Time] = calendarFromString map { c => new java.sql.Time(c.getTimeInMillis) }
+  implicit val sqlTimeFromString: ForConst[java.sql.Time] = localTimeFromString map { java.sql.Time.valueOf }
 
   implicit val finiteDurationFromString: ForConst[FiniteDuration] = create(Tempo.parseFiniteDuration)
 
