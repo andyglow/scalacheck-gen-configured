@@ -6,18 +6,18 @@ import scala.util.control.NonFatal
 
 trait ForRange[T] {
 
-  def apply(x: String): Either[String, Gen[T]]
+  def apply(min: String, max: String): Either[String, Gen[T]]
 }
 
 object ForRange {
 
   // needed to allow compiler handle parse[Strings](...)
   implicit val stringFromString: ForRange[String] = new ForRange[String] {
-    override def apply(x: String): Either[String, Gen[String]] = Left("range is not supported for strings")
+    override def apply(min: String, max: String): Either[String, Gen[String]] = Left("range is not supported for strings")
   }
 
   implicit val booleanFromString: ForRange[Boolean] = new ForRange[Boolean] {
-    override def apply(x: String): Either[String, Gen[Boolean]] = Left("range is not supported for booleans")
+    override def apply(min: String, max: String): Either[String, Gen[Boolean]] = Left("range is not supported for booleans")
   }
 
   implicit def rangeForConst[T: ForConst: Gen.Choose]: ForRange[T] = {
@@ -28,15 +28,12 @@ object ForRange {
 
   private def create[T: Gen.Choose](fn: String => T): ForRange[T] = new ForRange[T] {
 
-    override def apply(x: String): Either[String, Gen[T]] = x.split("\\.\\.") match {
-      case Array(min, max) =>
-        try Right(Gen.choose(fn(min.trim), fn(max.trim)))
-        catch {
-          case NonFatal(err) => Left(err.getMessage)
-        }
-      case _ => Left(s"can't parse range: $x")
+    override def apply(min: String, max: String): Either[String, Gen[T]] = {
+      try Right(Gen.choose(fn(min.trim), fn(max.trim))) catch {
+        case NonFatal(err) => Left(err.getMessage)
+      }
     }
   }
 
-  def parse[T](dfn: String)(implicit fr: ForRange[T]): Either[String, Gen[T]] = fr(dfn)
+  def parse[T](min: String, max: String)(implicit fr: ForRange[T]): Either[String, Gen[T]] = fr(min, max)
 }

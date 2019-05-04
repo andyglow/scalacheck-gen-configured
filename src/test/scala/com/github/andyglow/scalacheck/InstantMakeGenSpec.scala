@@ -6,7 +6,7 @@ import org.scalatest.Matchers._
 import org.scalatest._
 
 
-class InstantParseGenSpec extends WordSpec {
+class InstantMakeGenSpec extends WordSpec {
   import ParseGenSpecSupport._
 
   "ParseGen" when {

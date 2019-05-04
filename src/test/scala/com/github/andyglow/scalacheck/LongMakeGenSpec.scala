@@ -4,7 +4,7 @@ import org.scalatest.Matchers._
 import org.scalatest._
 
 
-class LongParseGenSpec extends WordSpec {
+class LongMakeGenSpec extends WordSpec {
   import ParseGenSpecSupport._
 
   "ParseGen" when {

@@ -6,7 +6,7 @@ import org.scalatest.Matchers._
 import org.scalatest._
 
 
-class LocalDateTimeParseGenSpec extends WordSpec {
+class LocalDateTimeMakeGenSpec extends WordSpec {
   import ParseGenSpecSupport._
 
   "ParseGen" when {

@@ -89,28 +89,28 @@ val Right(timestampGen) = ParseGen[java.time.Instant]("range: 2018-01-01T00:00Z 
 ## Definitions
 Below is a table showing whtcj definitions can be supported by types.  
 
-|                    | Numeric types | Char | String | Boolean | Date types | Duration |
-| ------------------ | ------------- | ---- | ------ | ------- | ---------- | -------- |
-| identifier         |               |      | X      |         |            |          |
-| numChar            |               | X    |        |         |            |          |
-| numStr             |               |      | X      |         |            |          |
-| alphaUpperChar     |               | X    |        |         |            |          |
-| alphaUpperStr      |               |      | X      |         |            |          |
-| alphaLowerChar     |               | X    |        |         |            |          |
-| alphaLowerStr      |               |      | X      |         |            |          |
-| alphaChar          |               | X    |        |         |            |          |
-| alphaStr           |               |      | X      |         |            |          |
-| alphaNumChar       |               | X    |        |         |            |          |
-| alphaNumStr        |               |      | X      |         |            |          |
-| asciiChar          |               | X    |        |         |            |          |
-| asciiStr           |               |      | X      |         |            |          |
-| asciiPrintableChar |               | X    |        |         |            |          |
-| asciiPrintableStr  |               |      | X      |         |            |          |
-| posNum             | X             |      |        |         |            |          |
-| negNum             | X             |      |        |         |            |          |
-| const              | X             | X    | X      | X       | X          | X        |
-| range              | X             | X    |        |         | X          | X        |
-| oneof              | X             | X    | X      | X       | X          | X        |
+|                      | Numeric types | Char | String | Boolean | Date types | Duration |
+| -------------------- | ------------- | ---- | ------ | ------- | ---------- | -------- |
+| `identifier`         |               |      | [x]    |         |            |          |
+| `numChar`            |               | [x]  |        |         |            |          |
+| `numStr`             |               |      | [x]    |         |            |          |
+| `alphaUpperChar`     |               | [x]  |        |         |            |          |
+| `alphaUpperStr`      |               |      | [x]    |         |            |          |
+| `alphaLowerChar`     |               | [x]  |        |         |            |          |
+| `alphaLowerStr`      |               |      | [x]    |         |            |          |
+| `alphaChar`          |               | [x]  |        |         |            |          |
+| `alphaStr`           |               |      | [x]    |         |            |          |
+| `alphaNumChar`       |               | [x]  |        |         |            |          |
+| `alphaNumStr`        |               |      | [x]    |         |            |          |
+| `asciiChar`          |               | [x]  |        |         |            |          |
+| `asciiStr`           |               |      | [x]    |         |            |          |
+| `asciiPrintableChar` |               | [x]  |        |         |            |          |
+| `asciiPrintableStr`  |               |      | [x]    |         |            |          |
+| `posNum`             | [x]           |      |        |         |            |          |
+| `negNum`             | [x]           |      |        |         |            |          |
+| `const`              | [x]           | [x]  | [x]    | [x]     | [x]        | [x]      |
+| `range`              | [x]           | [x]  |        |         | [x]        | [x]      |
+| `oneof`              | [x]           | [x]  | [x]    | [x]     | [x]        | [x]      |
 
 ### String definitions
 String definition can be complicated with size restriction.
@@ -194,9 +194,10 @@ compile "com.github.andyglow:scalacheck-gen-configured_${scalaVersion}:$latestVe
 ```
 
 ## TODO
-- options
-- containers (`List`, `Set`, `Map`, etc)
-- handle strings quoted (especially important when used woth `oneof`)
-- enums
-- case classes
-- allow pluggable definition formats. now it's strings only, but could be something else (consider typesafe `Config`, json `AST`, ...)
+- [ ] options
+- [ ] containers (`List`, `Set`, `Map`, etc)
+- [ ] handle strings quoted (especially important when used woth `oneof`)
+- [ ] enums
+- [ ] case classes
+- [x] allow pluggable definition formats. now it's strings only, but could be something else (consider typesafe `Config`, json `AST`, ...)
+- [ ] implement typesafe-config enabled `DefnFormat`

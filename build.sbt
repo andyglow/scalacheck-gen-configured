@@ -1,8 +1,6 @@
 import xerial.sbt.Sonatype._
 import ReleaseTransformations._
 
-//sonatypeSettings
-
 name := "scalacheck-gen-configured"
 
 homepage := Some(new URL("http://github.com/andyglow/scalacheck-gen-configured"))
@@ -14,31 +12,6 @@ organization := "com.github.andyglow"
 organizationName := "com.github.andyglow"
 
 publishTo := sonatypePublishTo.value
-// isSnapshot := version.value endsWith "SNAPSHOT"
-
-//publishTo := Some(
-//  if (isSnapshot.value)
-//    Opts.resolver.sonatypeSnapshots
-//  else
-//    Opts.resolver.sonatypeStaging
-//)
-
-//publishTo := Some {
-//  val sonatypeRepo = "https://oss.sonatype.org/"
-//  val profileM = sonatypeStagingRepositoryProfile.?.value
-//  println("profileM = " + profileM)
-//  
-//  if (isSnapshot.value) {
-//    Opts.resolver.sonatypeSnapshots
-//  } else {
-//    val staged = profileM.map { stagingRepoProfile =>
-//      "releases" at sonatypeRepo +
-//        "service/local/staging/deployByRepositoryId/" +
-//        stagingRepoProfile.repositoryId
-//    }
-//    staged.getOrElse(Opts.resolver.sonatypeStaging)
-//  }
-//}
 
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
 

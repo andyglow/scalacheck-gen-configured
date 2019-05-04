@@ -13,7 +13,7 @@ import scala.reflect.runtime.universe._
 object ParseGenSpecSupport {
 
   def doGen[T: ForConst: ForRange: ForOneOf: TypeTag](dfn: String): Either[String, T] = {
-    ParseGen[T](dfn).right map { _.pureApply(Gen.Parameters.default, Seed.random) }
+    MakeGen[T, String](dfn).right map { _.pureApply(Gen.Parameters.default, Seed.random) }
   }
 
   implicit class EitherOps[T](private val e: Either[String, T]) extends AnyVal {
