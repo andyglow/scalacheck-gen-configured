@@ -1,15 +1,44 @@
 import xerial.sbt.Sonatype._
 import ReleaseTransformations._
 
+//sonatypeSettings
+
 name := "scalacheck-gen-configured"
 
 homepage := Some(new URL("http://github.com/andyglow/scalacheck-gen-configured"))
 
 startYear := Some(2019)
 
-organizationName := "andyglow"
+organization := "com.github.andyglow"
+
+organizationName := "com.github.andyglow"
 
 publishTo := sonatypePublishTo.value
+// isSnapshot := version.value endsWith "SNAPSHOT"
+
+//publishTo := Some(
+//  if (isSnapshot.value)
+//    Opts.resolver.sonatypeSnapshots
+//  else
+//    Opts.resolver.sonatypeStaging
+//)
+
+//publishTo := Some {
+//  val sonatypeRepo = "https://oss.sonatype.org/"
+//  val profileM = sonatypeStagingRepositoryProfile.?.value
+//  println("profileM = " + profileM)
+//  
+//  if (isSnapshot.value) {
+//    Opts.resolver.sonatypeSnapshots
+//  } else {
+//    val staged = profileM.map { stagingRepoProfile =>
+//      "releases" at sonatypeRepo +
+//        "service/local/staging/deployByRepositoryId/" +
+//        stagingRepoProfile.repositoryId
+//    }
+//    staged.getOrElse(Opts.resolver.sonatypeStaging)
+//  }
+//}
 
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
 
@@ -37,8 +66,6 @@ scalacOptions in (Compile,doc) ++= Seq(
   "-no-link-warnings")
 
 licenses := Seq(("LGPL-3.0", url("https://www.gnu.org/licenses/lgpl-3.0.en.html")))
-
-sonatypeProfileName := "com.github.andyglow"
 
 publishMavenStyle := true
 
@@ -72,14 +99,13 @@ releaseProcess := Seq[ReleaseStep](
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,
-  releaseStepCommandAndRemaining("+publishSigned"),
+  ReleaseStep(action = Command.process("publishSigned", _), enableCrossBuild = true),
   setNextVersion,
   commitNextVersion,
-  releaseStepCommand("sonatypeReleaseAll"),
+  ReleaseStep(action = Command.process("sonatypeReleaseAll", _), enableCrossBuild = true),
   pushChanges)
 
 libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.14.0",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test
-)
+  "org.scalatest" %% "scalatest" % "3.0.5" % Test)

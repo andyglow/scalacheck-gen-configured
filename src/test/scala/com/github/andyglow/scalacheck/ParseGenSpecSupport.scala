@@ -20,7 +20,7 @@ object ParseGenSpecSupport {
 
     def value(implicit pos: source.Position): T = e match {
       case Right(value) => value
-      case Left(error) => fail(error); null.asInstanceOf[T]
+      case Left(error) => fail(error)
     }
   }
 
