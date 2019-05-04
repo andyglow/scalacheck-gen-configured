@@ -116,13 +116,13 @@ Below is a table showing whtcj definitions can be supported by types.
 String definition can be complicated with size restriction.
 
 ```
-<definition> ::= <term>:<restriction>
-<restriction> ::= <strict>
-                | <greater-then>
-                | <less-then>       
-<strict> := DIGIT+
+<definition>   ::= <term> ":" <restriction>
+<restriction>  ::= <strict>
+                 | <greater-then>
+                 | <less-then>       
+<strict>       := DIGIT+
 <greater-then> := ">" DIGIT+
-<less-then> := "<" DIGIT+
+<less-then>    := "<" DIGIT+
 ```
 Examples
 ```
@@ -133,6 +133,12 @@ asciiStr: > 0
 
 ### Const definition
 `const` definition will result in `Gen.const` with given value if converted to specified type.
+
+```
+<definition>   ::= "const" ":" <value>
+<value>        ::= <any>
+```
+
 Examples
 ```
 const: 5
@@ -142,6 +148,11 @@ const: 2018-04-04T00:00Z
 
 ### Range definition
 `range` definition will result in `Gen.choose` with given value if converted to specified type.
+
+```
+<definition>   ::= "range" ":" <value> ".." <value>
+<value>        ::= <any>
+```
 Examples
 ```
 range: 5 .. 12 // numeric
@@ -151,6 +162,11 @@ range: 5ns .. 8m // duration
 
 ### OneOf definition
 `oneof` definition will result in `Gen.choose` with given value if converted to specified type.
+
+```
+<definition>   ::= "oneof" ":" <value> ("," <value>)*
+<value>        ::= <any>
+```
 Examples
 ```
 oneof: 1, 2, 3, 76 // numeric
@@ -180,5 +196,7 @@ compile "com.github.andyglow:scalacheck-gen-configured_${scalaVersion}:$latestVe
 ## TODO
 - options
 - containers (`List`, `Set`, `Map`, etc)
+- handle strings quoted (especially important when used woth `oneof`)
 - enums
 - case classes
+- allow pluggable definition formats. now it's strings only, but could be something else (consider typesafe `Config`, json `AST`, ...)
