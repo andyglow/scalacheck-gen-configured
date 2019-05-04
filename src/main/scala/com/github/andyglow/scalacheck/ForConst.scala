@@ -57,20 +57,9 @@ object ForConst {
 
   implicit val offsetDateTimeFromString: ForConst[OffsetDateTime] = create(Tempo.parseOffsetDateTime)
 
-  implicit val calendarFromString: ForConst[Calendar] = localDateTimeFromString map { dt =>
-    val c = Calendar.getInstance()
-    c.clear()
-    c.set(
-      dt.getYear,
-      dt.getMonthValue - 1,
-      dt.getDayOfMonth,
-      dt.getHour,
-      dt.getMinute,
-      dt.getSecond)
-    c
-  }
+  implicit val calendarFromString: ForConst[Calendar] = create(Tempo.parseCalendar)
 
-  implicit val dateFromString: ForConst[Date] = calendarFromString map { _.getTime }
+  implicit val dateFromString: ForConst[Date] = localDateTimeFromString map { x => Date.from(x.toInstant(Tempo.systemZoneOffset)) }
 
   implicit val sqlDateFromString: ForConst[java.sql.Date] = localDateFromString map { java.sql.Date.valueOf }
 

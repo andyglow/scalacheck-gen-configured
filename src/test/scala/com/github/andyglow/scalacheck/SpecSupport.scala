@@ -1,5 +1,6 @@
 package com.github.andyglow.scalacheck
 
+import java.time.Instant
 import java.util.Calendar
 
 import org.scalacheck.Gen
@@ -27,6 +28,12 @@ object SpecSupport {
     def withEpochMillis(x: Long): Calendar = {
       val copy = c.clone().asInstanceOf[Calendar]
       copy.setTimeInMillis(x)
+      copy
+    }
+
+    def withInstant(x: Instant): Calendar = {
+      val copy = c.clone().asInstanceOf[Calendar]
+      copy.setTimeInMillis(x.toEpochMilli)
       copy
     }
   }

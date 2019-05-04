@@ -2,6 +2,7 @@ package com.github.andyglow.scalacheck
 
 import java.time.format.DateTimeFormatter._
 import java.time._
+import java.util.Calendar
 
 import scala.concurrent.duration._
 
@@ -54,6 +55,20 @@ private[andyglow] object Tempo {
     parse(x)(
       Instant.ofEpochMilli,
       Instant.parse)
+
+  def parseCalendar(x: String): Calendar = {
+    val dt = parseLocalDateTime(x)
+    val c = Calendar.getInstance()
+    c.clear()
+    c.set(
+      dt.getYear,
+      dt.getMonthValue - 1,
+      dt.getDayOfMonth,
+      dt.getHour,
+      dt.getMinute,
+      dt.getSecond)
+    c
+  }
 
   def parseZonedDateTime(x: String): ZonedDateTime =
     parse(x)(

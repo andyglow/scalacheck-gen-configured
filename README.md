@@ -73,6 +73,18 @@ The only pretty strict amount of type supported yet.
 - Duration types
     - `FiniteDuration`
     - `Duration`
+
+## API
+`ParseGen[T](defn: String): Either[String, Gen[T]]`
+
+Examples
+```scala
+import com.github.andyglow.scalacheck._
+
+val Right(idGen)        = ParseGen[String]("identifier: 16")
+val Right(posLongGen)   = ParseGen[Long]("posNum")
+val Right(timestampGen) = ParseGen[java.time.Instant]("range: 2018-01-01T00:00Z .. 2018-12-31T23:59Z")
+```
     
 ## Definitions
 Below is a table showing whtcj definitions can be supported by types.  

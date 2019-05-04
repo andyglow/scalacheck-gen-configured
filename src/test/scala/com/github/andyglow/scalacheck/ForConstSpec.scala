@@ -1,6 +1,7 @@
 package com.github.andyglow.scalacheck
 
 import java.time._
+import java.util.TimeZone
 
 import org.scalatest._
 import org.scalatest.Matchers._
@@ -45,8 +46,8 @@ class ForConstSpec extends WordSpec {
       "String" in { ForConst.parse[String]("foo").value shouldBe "foo" }
       "Boolean. False" in { ForConst.parse[Boolean]("false").value shouldBe false }
       "Boolean. True" in { ForConst.parse[Boolean]("true").value shouldBe true }
-      "java.util.Date" in { ForConst.parse[java.util.Date]("2018-03-06T11:34").value shouldBe new java.util.Date(1520364840000l) }
-      "java.util.Calendar" in { ForConst.parse[java.util.Calendar]("2018-03-06T11:34").value shouldBe java.util.Calendar.getInstance().withEpochMillis(1520364840000l) }
+      "java.util.Date" in { ForConst.parse[java.util.Date]("2018-03-06T11:34").value shouldBe java.util.Date.from(LocalDateTime.parse("2018-03-06T11:34").toInstant(Tempo.systemZoneOffset)) }
+      "java.util.Calendar" in { ForConst.parse[java.util.Calendar]("2018-03-06T11:34").value shouldBe Tempo.parseCalendar("2018-03-06T11:34") }
       "java.sql.Date" in { ForConst.parse[java.sql.Date]("2018-03-06").value shouldBe java.sql.Date.valueOf("2018-03-06") }
       "java.sql.Time" in { ForConst.parse[java.sql.Time]("03:06").value shouldBe java.sql.Time.valueOf("03:06:00") }
       "java.time.Instant" in { ForConst.parse[java.time.Instant]("2018-03-06T11:34:00Z").value shouldBe Instant.parse("2018-03-06T11:34:00Z") }
