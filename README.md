@@ -160,8 +160,25 @@ oneof: 5ns, 8m, 32d // duration
 
 ## How to use
 
-| Build tool | Line |
-| ---------- | ---- |
-| SBT        | `libraryDependencies += "com.github.andyglow" %% "scalacheck-gen-configured" % "$latestVersion"` |
-| Gradle     | `compile "com.github.andyglow:scalacheck-gen-configured_${scalaVersion}:$latestVersion"` |
-| Maven      | `<dependency><groupId>com.github.andyglow</groupId><artifactId>scalacheck-gen-configured_${scalaVersion}</artifactId><version>$latestVersion</version></dependency>` |
+###### SBT
+```scala
+libraryDependencies += "com.github.andyglow" %% "scalacheck-gen-configured" % "$latestVersion"
+```
+###### Gradle
+```
+compile "com.github.andyglow:scalacheck-gen-configured_${scalaVersion}:$latestVersion"
+```
+###### Maven
+```xml
+<dependency>
+    <groupId>com.github.andyglow</groupId>
+    <artifactId>scalacheck-gen-configured_${scalaVersion}</artifactId>
+    <version>$latestVersion</version>
+</dependency>
+```
+
+## TODO
+- options
+- containers (`List`, `Set`, `Map`, etc)
+- enums
+- case classes
