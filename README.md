@@ -7,7 +7,7 @@
 
 With this project you can externalize `Gen[T]` configuration. 
 
-When I needed to generate some amount of test data the first think appeared to my ming was to use `Gen[T]` 
+When I needed to generate some amount of test data the first think appeared to my mind was to use `Gen[T]` 
 from awesome `scalacheck` project. I have written first version of data generator really quickly. I have deployed then
 into right place, started, checked my app started receiving test data. That was cool. 
 
