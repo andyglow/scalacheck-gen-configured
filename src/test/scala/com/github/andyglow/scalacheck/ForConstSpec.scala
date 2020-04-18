@@ -4,12 +4,14 @@ import java.time._
 import java.util.TimeZone
 
 import org.scalatest._
-import org.scalatest.Matchers._
+import matchers.should.Matchers._
 import com.github.andyglow.util.Scala212Compat._
 import SpecSupport._
+import org.scalatest.matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 
-class ForConstSpec extends WordSpec {
+class ForConstSpec extends AnyWordSpec {
 
   "ForConst" should {
 

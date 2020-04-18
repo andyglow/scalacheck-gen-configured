@@ -1,9 +1,11 @@
 package com.github.andyglow.scalacheck
 
-import org.scalatest.Matchers._
+import matchers.should.Matchers._
 import org.scalatest._
+import org.scalatest.matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class ForRangeSpec extends WordSpec {
+class ForRangeSpec extends AnyWordSpec {
 
   "ForRange" should {
     "support Byte" in { "implicitly[ForRange[Byte]]" should compile }

@@ -81,4 +81,4 @@ releaseProcess := Seq[ReleaseStep](
 libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.14.3",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "org.scalatest" %% "scalatest" % "3.0.8" % Test)
+  "org.scalatest" %% "scalatest" % "3.1.1" % Test)

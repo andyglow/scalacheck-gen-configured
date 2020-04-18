@@ -2,11 +2,13 @@ package com.github.andyglow.scalacheck
 
 import java.time.{Instant, LocalDate, LocalDateTime, LocalTime}
 
-import org.scalatest.Matchers._
+import matchers.should.Matchers._
 import org.scalatest._
+import org.scalatest.matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 
-class LocalDateTimeMakeGenSpec extends WordSpec {
+class LocalDateTimeMakeGenSpec extends AnyWordSpec {
   import ParseGenSpecSupport._
 
   "ParseGen" when {
