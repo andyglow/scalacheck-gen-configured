@@ -19,7 +19,7 @@ publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
 
 scalaVersion := "2.11.12"
 
-crossScalaVersions := Seq("2.12.8", "2.11.12")
+crossScalaVersions := Seq("2.13.1", "2.12.10", "2.11.12")
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8",
