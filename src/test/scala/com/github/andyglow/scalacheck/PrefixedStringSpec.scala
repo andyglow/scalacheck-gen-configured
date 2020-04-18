@@ -1,10 +1,12 @@
 package com.github.andyglow.scalacheck
 
 import org.scalatest._
-import org.scalatest.Matchers._
+import matchers.should.Matchers._
+import org.scalatest.matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 
-class PrefixedStringSpec extends WordSpec {
+class PrefixedStringSpec extends AnyWordSpec {
   import PrefixedStringSpec._
 
   "PrefixedString" should {

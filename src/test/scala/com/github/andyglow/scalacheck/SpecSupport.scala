@@ -5,8 +5,9 @@ import java.util.Calendar
 
 import org.scalacheck.Gen
 import org.scalacheck.rng.Seed
-import org.scalatest.Matchers._
+import matchers.should.Matchers._
 import com.github.andyglow.util.Scala212Compat._
+import org.scalatest.matchers
 
 
 object SpecSupport {

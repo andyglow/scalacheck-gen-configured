@@ -5,9 +5,10 @@ import java.time.{LocalDate, LocalDateTime, LocalTime}
 import org.scalacheck.Gen
 import org.scalacheck.rng.Seed
 import org.scalactic.source
-import org.scalatest.Matchers.fail
+import matchers.should.Matchers.fail
 
 import scala.reflect.runtime.universe._
+import org.scalatest.matchers
 
 
 object ParseGenSpecSupport {

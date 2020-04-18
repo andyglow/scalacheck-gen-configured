@@ -2,10 +2,12 @@ package com.github.andyglow.scalacheck
 
 import com.github.andyglow.scalacheck.format.string.BoundsParser
 import org.scalatest._
-import org.scalatest.Matchers._
+import matchers.should.Matchers._
+import org.scalatest.matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 
-class BoundsParserSpec extends WordSpec {
+class BoundsParserSpec extends AnyWordSpec {
 
   "BoundsParser" should {
 
