@@ -1,13 +1,12 @@
 package com.github.andyglow.scalacheck
 
 import com.github.andyglow.scalacheck.format.string.StringDefnFormat
-
-import scala.reflect.runtime.universe._
+import com.github.andyglow.util.Result
 
 
 trait DefnFormat[D] {
 
-  def make(x: D): Either[String, GenDefn]
+  def make(x: D): Result[GenDefn]
 }
 
 object DefnFormat {

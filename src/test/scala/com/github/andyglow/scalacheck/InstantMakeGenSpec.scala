@@ -1,10 +1,8 @@
 package com.github.andyglow.scalacheck
 
-import java.time.{Instant, LocalDateTime}
+import java.time.Instant
 
-import matchers.should.Matchers._
-import org.scalatest._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 
 
@@ -51,7 +49,7 @@ class InstantMakeGenSpec extends AnyWordSpec {
         "alphaNumStr",
         "asciiStr",
         "asciiPrintableStr") }
-        s"not handle $dfn" in { doGen[Instant](dfn) shouldBe 'left }
+        s"not handle $dfn" in { doGen[Instant](dfn) shouldBe Symbol("left") }
     }
   }
 }

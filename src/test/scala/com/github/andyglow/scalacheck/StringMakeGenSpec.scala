@@ -1,8 +1,6 @@
 package com.github.andyglow.scalacheck
 
-import matchers.should.Matchers._
-import org.scalatest._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 
 
@@ -65,7 +63,7 @@ class StringMakeGenSpec extends AnyWordSpec {
         "posNum",
         "negNum",
         "range: 1 .. 3") }
-        s"not handle $dfn" in { doGen[String](dfn) shouldBe 'left }
+        s"not handle $dfn" in { doGen[String](dfn) shouldBe Symbol("left") }
     }
   }
 
@@ -75,19 +73,19 @@ class StringMakeGenSpec extends AnyWordSpec {
 
     "no size defined" in {
       val str = doGen[String](name).value
-      str should not be 'empty
+      str should not be Symbol("empty")
       checkHead(str.head)
       str foreach checkChar
     }
 
     "strict 0 size defined" in {
       val str = doGen[String](s"$name: 0").value
-      str shouldBe 'empty
+      str shouldBe Symbol("empty")
     }
 
     "strict 1 size defined" in {
       val str = doGen[String](s"$name: 1").value
-      str should not be 'empty
+      str should not be Symbol("empty")
       checkHead(str.head)
       str foreach checkChar
     }

@@ -1,9 +1,8 @@
 package com.github.andyglow.scalacheck
 
-import matchers.should.Matchers._
-import org.scalatest._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+import com.github.andyglow.util.ScalaVersionSpecificPackage._
 
 
 class DoubleMakeGenSpec extends AnyWordSpec {
@@ -46,7 +45,7 @@ class DoubleMakeGenSpec extends AnyWordSpec {
         "alphaNumStr",
         "asciiStr",
         "asciiPrintableStr") }
-        s"not handle $dfn" in { doGen[Double](dfn) shouldBe 'left }
+        s"not handle $dfn" in { doGen[Double](dfn) shouldBe Symbol("left") }
     }
   }
 }

@@ -3,24 +3,24 @@ package com.github.andyglow.scalacheck
 import java.time.Instant
 import java.util.Calendar
 
+import com.github.andyglow.util.Result
+import com.github.andyglow.util.Result._
 import org.scalacheck.Gen
 import org.scalacheck.rng.Seed
-import matchers.should.Matchers._
-import com.github.andyglow.util.Scala212Compat._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 
 
 object SpecSupport {
 
   private val seed = Seed.random
 
-  implicit class EitherErrorOps[T](private val e: Either[String, Gen[T]]) extends AnyVal {
+  implicit class ResultOps[T](private val e: Result[Gen[T]]) extends AnyVal {
 
-    def generate: Either[String, T] = e.map(_.pureApply(Gen.Parameters.default, seed))
+    def generate: Result[T] = e.map(_.pureApply(Gen.Parameters.default, seed))
 
     def value: T = generate match {
-      case Right(v)   => v
-      case Left(err)  => fail(err)
+      case Ok(v)      => v
+      case Error(err) => fail(err)
     }
   }
 

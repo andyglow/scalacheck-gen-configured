@@ -1,6 +1,7 @@
 package com.github.andyglow.scalacheck
 
-import com.github.andyglow.util.Scala212Compat._
+import com.github.andyglow.util.Result
+import com.github.andyglow.util.Result._
 import org.scalacheck.Gen
 
 import scala.util.control.NonFatal
@@ -8,7 +9,7 @@ import scala.util.control.NonFatal
 
 trait ForOneOf[T] {
 
-  def apply(x: String, xs: String*): Either[String, Gen[T]]
+  def apply(x: String, xs: String*): Result[Gen[T]]
 }
 
 object ForOneOf {
@@ -16,7 +17,7 @@ object ForOneOf {
   implicit val stringFromString: ForOneOf[String] = create(identity)
 
   implicit val booleanFromString: ForOneOf[Boolean] = new ForOneOf[Boolean] {
-    override def apply(x: String, xs: String*): Either[String, Gen[Boolean]] = Right(Gen.oneOf(true, false))
+    override def apply(x: String, xs: String*): Result[Gen[Boolean]] = Ok(Gen.oneOf(true, false))
   }
 
   implicit def oneOfFromConst[T: ForConst]: ForOneOf[T] = {
@@ -24,14 +25,14 @@ object ForOneOf {
 
     new ForOneOf[T] {
 
-      override def apply(x: String, xs: String*): Either[String, Gen[T]] = {
+      override def apply(x: String, xs: String*): Result[Gen[T]] = {
         try {
           val gs = (x +: xs) flatMap { fc(_).toSeq }
-          Right {
+          Ok {
             Gen.choose(0, gs.length - 1) flatMap { gs(_) }
           }
         } catch {
-          case NonFatal(err) => Left(err.getMessage)
+          case NonFatal(err) => Error(err.getMessage)
         }
       }
     }
@@ -39,15 +40,15 @@ object ForOneOf {
 
   private def create[T](fn: String => T): ForOneOf[T] = new ForOneOf[T] {
 
-    override def apply(x: String, xs: String*): Either[String, Gen[T]] = {
+    override def apply(x: String, xs: String*): Result[Gen[T]] = {
       try {
         val vals = (x +: xs) map { _.trim } filterNot { _.isEmpty } map fn
-        Right(Gen.oneOf(vals))
+        Ok(Gen.oneOf(vals))
       } catch {
-        case NonFatal(err) => Left(err.getMessage)
+        case NonFatal(err) => Error(err.getMessage)
       }
     }
   }
 
-  def parse[T](x: String, xs: String*)(implicit fr: ForOneOf[T]): Either[String, Gen[T]] = fr(x, xs:_*)
+  def parse[T](x: String, xs: String*)(implicit fr: ForOneOf[T]): Result[Gen[T]] = fr(x, xs:_*)
 }

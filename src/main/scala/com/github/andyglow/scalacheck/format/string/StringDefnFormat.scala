@@ -1,44 +1,43 @@
 package com.github.andyglow.scalacheck.format.string
 
-import com.github.andyglow.scalacheck.{GenDefn, PrefixedString, BoundsDefn, DefnFormat}
-import com.github.andyglow.util.Scala212Compat._
-
-import scala.util.Try
+import com.github.andyglow.scalacheck.{DefnFormat, GenDefn, PrefixedString}
+import com.github.andyglow.util.Result
+import com.github.andyglow.util.Result._
 
 
 object StringDefnFormat extends DefnFormat[String] {
   import GenDefn._
 
-  override def make(defn: String): Either[String, GenDefn] = {
+  override def make(defn: String): Result[GenDefn] = {
     defn match {
-      case "numChar"            => Right(numChar)
-      case "alphaUpperChar"     => Right(alphaUpperChar)
-      case "alphaLowerChar"     => Right(alphaLowerChar)
-      case "alphaChar"          => Right(alphaChar)
-      case "alphaNumChar"       => Right(alphaNumChar)
-      case "asciiChar"          => Right(asciiChar)
-      case "asciiPrintableChar" => Right(asciiPrintableChar)
-      case "posNum"             => Right(posNum)
-      case "negNum"             => Right(negNum)
+      case "numChar"            => Ok(numChar)
+      case "alphaUpperChar"     => Ok(alphaUpperChar)
+      case "alphaLowerChar"     => Ok(alphaLowerChar)
+      case "alphaChar"          => Ok(alphaChar)
+      case "alphaNumChar"       => Ok(alphaNumChar)
+      case "asciiChar"          => Ok(asciiChar)
+      case "asciiPrintableChar" => Ok(asciiPrintableChar)
+      case "posNum"             => Ok(posNum)
+      case "negNum"             => Ok(negNum)
 
       case PrefixedString(prefix, defn) =>
         (prefix, defn) match {
-          case ("identifier", _)         => BoundsParser[Int].parse(defn) map identifier.apply
-          case ("numStr", _)             => BoundsParser[Int].parse(defn) map numStr.apply
-          case ("alphaUpperStr", _)      => BoundsParser[Int].parse(defn) map alphaUpperStr.apply
-          case ("alphaLowerStr", _)      => BoundsParser[Int].parse(defn) map alphaLowerStr.apply
-          case ("alphaStr", _)           => BoundsParser[Int].parse(defn) map alphaStr.apply
-          case ("alphaNumStr", _)        => BoundsParser[Int].parse(defn) map alphaNumStr.apply
-          case ("asciiStr", _)           => BoundsParser[Int].parse(defn) map asciiStr.apply
-          case ("asciiPrintableStr", _)  => BoundsParser[Int].parse(defn) map asciiPrintableStr.apply
+          case ("identifier", _)         => ExprParser[Int].parse(defn) map identifier.apply
+          case ("numStr", _)             => ExprParser[Int].parse(defn) map numStr.apply
+          case ("alphaUpperStr", _)      => ExprParser[Int].parse(defn) map alphaUpperStr.apply
+          case ("alphaLowerStr", _)      => ExprParser[Int].parse(defn) map alphaLowerStr.apply
+          case ("alphaStr", _)           => ExprParser[Int].parse(defn) map alphaStr.apply
+          case ("alphaNumStr", _)        => ExprParser[Int].parse(defn) map alphaNumStr.apply
+          case ("asciiStr", _)           => ExprParser[Int].parse(defn) map asciiStr.apply
+          case ("asciiPrintableStr", _)  => ExprParser[Int].parse(defn) map asciiPrintableStr.apply
 
-          case ("const", Some(defn))                => Right(const(defn))
-          case ("range", Some(RangeStmt(min, max))) => Right(range(min, max))
-          case ("oneof", Some(OneOfStmt(items)))    => Right(oneof(items.head, items.tail:_*))
-          case _                                    => Left(s"can't parse $defn")
+          case ("const", Some(defn))                => Ok(const(defn))
+          case ("range", Some(RangeStmt(min, max))) => Ok(range(min, max))
+          case ("oneof", Some(OneOfStmt(items)))    => Ok(oneof(items.head, items.tail:_*))
+          case _                                    => Error(s"can't parse $defn")
         }
 
-      case _ => Left(s"can't parse $defn")
+      case _ => Error(s"can't parse $defn")
     }
   }
 

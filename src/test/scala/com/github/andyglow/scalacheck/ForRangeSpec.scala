@@ -1,9 +1,8 @@
 package com.github.andyglow.scalacheck
 
-import matchers.should.Matchers._
-import org.scalatest._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+
 
 class ForRangeSpec extends AnyWordSpec {
 

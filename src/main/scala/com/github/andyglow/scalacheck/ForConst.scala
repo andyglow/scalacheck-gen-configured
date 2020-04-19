@@ -3,6 +3,8 @@ package com.github.andyglow.scalacheck
 import java.time._
 import java.util.{Calendar, Date}
 
+import com.github.andyglow.util.Result
+import com.github.andyglow.util.Result._
 import org.scalacheck.Gen
 
 import scala.concurrent.duration.{Duration, FiniteDuration}
@@ -13,14 +15,14 @@ trait ForConst[T] { self =>
 
   def crack(x: String): T
 
-  def apply(x: String): Either[String, Gen[T]]
+  def apply(x: String): Result[Gen[T]]
 
   def map[R](f: T => R): ForConst[R] = new ForConst[R] {
 
     def crack(x: String): R = f(self crack x)
 
-    def apply(x: String): Either[String, Gen[R]] = for {
-      g <- self(x).right
+    def apply(x: String): Result[Gen[R]] = for {
+      g <- self(x)
     } yield g map f
   }
 }
@@ -77,11 +79,11 @@ object ForConst {
 
     def crack(x: String): T = fn(x)
 
-    def apply(x: String): Either[String, Gen[T]] =
-      try Right(Gen.const(fn(x))) catch {
-        case NonFatal(err) => Left(err.getMessage)
+    def apply(x: String): Result[Gen[T]] =
+      try Ok(Gen.const(fn(x))) catch {
+        case NonFatal(err) => Error(err.getMessage)
       }
   }
 
-  def parse[T](dfn: String)(implicit fc: ForConst[T]): Either[String, Gen[T]] = fc(dfn)
+  def parse[T](dfn: String)(implicit fc: ForConst[T]): Result[Gen[T]] = fc(dfn)
 }

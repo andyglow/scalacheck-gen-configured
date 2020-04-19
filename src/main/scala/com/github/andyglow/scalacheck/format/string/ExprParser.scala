@@ -1,51 +1,53 @@
 package com.github.andyglow.scalacheck.format.string
 
-import com.github.andyglow.util.Scala212Compat._
-import com.github.andyglow.scalacheck.{BoundsDefn, BoundsDefnPkg}
+import com.github.andyglow.scalacheck._
+import com.github.andyglow.util.Result
+import com.github.andyglow.util.Result._
 
 import scala.collection.mutable
-import scala.util.Try
 
-class BoundsParser[T: Numeric: Ordering](implicit pkg: BoundsDefnPkg[T], ap: BoundsParser.AcceptParse[T]) {
+
+class ExprParser[T: Numeric: Ordering](implicit pkg: ExprPackage[T], ap: ExprParser.AcceptParse[T]) {
   import pkg._
 
-  def parse(defn: Option[String]): Either[String, BoundsDefn[T]] =
-    defn flatMap { x => Option(x).map(_.trim).filterNot(_.isEmpty) } map { parse(_) } getOrElse Right(Free)
+  def parse(defn: Option[String]): Result[Expr[T]] =
+    defn flatMap { x => Option(x).map(_.trim).filterNot(_.isEmpty) } map { parse(_) } getOrElse Ok(Free)
 
-  def parse(defn: String): Either[String, BoundsDefn[T]] = {
+  def parse(defn: String): Result[Expr[T]] = {
     val greater       = mutable.ListBuffer[GreaterThen]()
     val less          = mutable.ListBuffer[LessThen]()
     var exact: Exact  = null
 
-    def ifExactIsNull(f: => Unit): Option[String] = if (exact != null) Some("exact is already set") else { f; None }
+    def ifExactIsNull(f: => Unit): Option[String] =
+      if (exact != null) Some("exact is already set") else { f; None }
 
     val err = parse(defn.trim.toCharArray) { sd =>
       sd match {
-        case sd: Exact        => ifExactIsNull { exact = sd }
-        case sd: LessThen     => ifExactIsNull { less += sd }
-        case sd: GreaterThen  => ifExactIsNull { greater += sd }
-        case _                => Some("error")
+        case Exact(v)       => ifExactIsNull { exact = mkExact(v) }
+        case LessThen(v)    => ifExactIsNull { less += mkLessThen(v) }
+        case GreaterThen(v) => ifExactIsNull { greater += mkGreaterThen(v) }
+        case _              => Some("error")
       }
     }
 
-    err toLeft {
+    err toError {
       import Ordered._
 
-      val minGreater = if (greater.nonEmpty) Some(greater.minBy(_.value).value) else None
-      val maxLess    = if (less.nonEmpty)    Some(less.maxBy(_.value).value) else None
+      val minGreater = if (greater.nonEmpty) Some(greater.minBy(_.v).v) else None
+      val maxLess    = if (less.nonEmpty)    Some(less.maxBy(_.v).v) else None
 
       (minGreater, maxLess) match {
-        case (Some(g), None)              => GreaterThen(g)
-        case (None, Some(l))              => LessThen(l)
+        case (Some(g), None)              => mkGreaterThen(g)
+        case (None, Some(l))              => mkLessThen(l)
         case (None, None)                 => if (exact != null) exact else Free
         case (Some(g), Some(l)) if g == l => Free
-        case (Some(g), Some(l)) if g < l  => Inside(g, l)
-        case (Some(g), Some(l)) if g > l  => Outside(l, g)
+        case (Some(g), Some(l)) if g < l  => mkInside(g, l)
+        case (Some(g), Some(l)) if g > l  => mkOutside(l, g)
       }
     }
   }
 
-  def parse(cs: Array[Char])(handler: BoundsDefn[T] => Option[String]): Option[String] = {
+  def parse(cs: Array[Char])(handler: Expr[T] => Option[String]): Option[String] = {
     sealed trait Token {
       def sb: StringBuilder
     }
@@ -59,9 +61,9 @@ class BoundsParser[T: Numeric: Ordering](implicit pkg: BoundsDefnPkg[T], ap: Bou
       if (t != null && t.sb.nonEmpty) {
         val res = handler {
           t match {
-            case _: ExactToken    => Exact(ap.parse(t.sb))
-            case _: GreaterToken  => GreaterThen(ap.parse(t.sb))
-            case _: LessToken     => LessThen(ap.parse(t.sb))
+            case _: ExactToken    => mkExact(ap.parse(t.sb))
+            case _: GreaterToken  => mkGreaterThen(ap.parse(t.sb))
+            case _: LessToken     => mkLessThen(ap.parse(t.sb))
           }
         }
         t = null
@@ -89,7 +91,7 @@ class BoundsParser[T: Numeric: Ordering](implicit pkg: BoundsDefnPkg[T], ap: Bou
   }
 }
 
-object BoundsParser {
+object ExprParser {
 
   sealed trait AcceptParse[T] {
     def accept(c: Char, sb: Option[StringBuilder]): Boolean
@@ -153,6 +155,6 @@ object BoundsParser {
     }
   }
 
-  def apply[T: Numeric: Ordering: BoundsDefnPkg: AcceptParse]: BoundsParser[T] = new BoundsParser[T]()
+  def apply[T: Numeric: Ordering: ExprPackage: AcceptParse]: ExprParser[T] = new ExprParser[T]()
 
 }

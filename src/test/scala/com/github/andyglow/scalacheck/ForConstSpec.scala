@@ -1,13 +1,9 @@
 package com.github.andyglow.scalacheck
 
 import java.time._
-import java.util.TimeZone
 
-import org.scalatest._
-import matchers.should.Matchers._
-import com.github.andyglow.util.Scala212Compat._
 import SpecSupport._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 
 
@@ -61,21 +57,21 @@ class ForConstSpec extends AnyWordSpec {
     }
 
     "fail parsing" when {
-      "Byte if not number" in { ForConst.parse[Byte]("z").generate shouldBe 'left }
-      "Byte if empty" in { ForConst.parse[Byte]("").generate shouldBe 'left }
-      "Short if not number" in { ForConst.parse[Short]("z").generate shouldBe 'left }
-      "Short if empty" in { ForConst.parse[Short]("").generate shouldBe 'left }
-      "Int if not number" in { ForConst.parse[Int]("z").generate shouldBe 'left }
-      "Int if empty" in { ForConst.parse[Int]("").generate shouldBe 'left }
-      "Long if not number" in { ForConst.parse[Long]("z").generate shouldBe 'left }
-      "Long if empty" in { ForConst.parse[Long]("").generate shouldBe 'left }
-      "Float if not number" in { ForConst.parse[Float]("z").generate shouldBe 'left }
-      "Float if empty" in { ForConst.parse[Float]("").generate shouldBe 'left }
-      "Double if not number" in { ForConst.parse[Double]("z").generate shouldBe 'left }
-      "Double if empty" in { ForConst.parse[Float]("").generate shouldBe 'left }
-      "Char if empty" in { ForConst.parse[Char]("").generate shouldBe 'left }
-      "Boolean if not true or false" in { ForConst.parse[Boolean]("zzz").generate shouldBe 'left }
-      "Boolean if empty" in { ForConst.parse[Boolean]("").generate shouldBe 'left }
+      "Byte if not number" in { ForConst.parse[Byte]("z").generate shouldBe Symbol("left") }
+      "Byte if empty" in { ForConst.parse[Byte]("").generate shouldBe Symbol("left") }
+      "Short if not number" in { ForConst.parse[Short]("z").generate shouldBe Symbol("left") }
+      "Short if empty" in { ForConst.parse[Short]("").generate shouldBe Symbol("left") }
+      "Int if not number" in { ForConst.parse[Int]("z").generate shouldBe Symbol("left") }
+      "Int if empty" in { ForConst.parse[Int]("").generate shouldBe Symbol("left") }
+      "Long if not number" in { ForConst.parse[Long]("z").generate shouldBe Symbol("left") }
+      "Long if empty" in { ForConst.parse[Long]("").generate shouldBe Symbol("left") }
+      "Float if not number" in { ForConst.parse[Float]("z").generate shouldBe Symbol("left") }
+      "Float if empty" in { ForConst.parse[Float]("").generate shouldBe Symbol("left") }
+      "Double if not number" in { ForConst.parse[Double]("z").generate shouldBe Symbol("left") }
+      "Double if empty" in { ForConst.parse[Float]("").generate shouldBe Symbol("left") }
+      "Char if empty" in { ForConst.parse[Char]("").generate shouldBe Symbol("left") }
+      "Boolean if not true or false" in { ForConst.parse[Boolean]("zzz").generate shouldBe Symbol("left") }
+      "Boolean if empty" in { ForConst.parse[Boolean]("").generate shouldBe Symbol("left") }
     }
   }
 }

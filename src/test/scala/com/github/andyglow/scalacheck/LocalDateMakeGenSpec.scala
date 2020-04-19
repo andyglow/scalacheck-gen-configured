@@ -2,9 +2,7 @@ package com.github.andyglow.scalacheck
 
 import java.time.{Instant, LocalDate, LocalDateTime}
 
-import matchers.should.Matchers._
-import org.scalatest._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 
 
@@ -50,7 +48,7 @@ class LocalDateMakeGenSpec extends AnyWordSpec {
         "alphaNumStr",
         "asciiStr",
         "asciiPrintableStr") }
-        s"not handle $dfn" in { doGen[LocalDate](dfn) shouldBe 'left }
+        s"not handle $dfn" in { doGen[LocalDate](dfn) shouldBe Symbol("left") }
     }
   }
 }

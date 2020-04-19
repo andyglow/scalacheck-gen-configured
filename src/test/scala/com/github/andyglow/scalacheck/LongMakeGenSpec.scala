@@ -1,8 +1,6 @@
 package com.github.andyglow.scalacheck
 
-import matchers.should.Matchers._
-import org.scalatest._
-import org.scalatest.matchers
+import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 
 
@@ -13,21 +11,21 @@ class LongMakeGenSpec extends AnyWordSpec {
 
     "Long" should {
 
-      "handle posNum" in { doGen[Long]("posNum").value should be >= 0l }
+      "handle posNum" in { doGen[Long]("posNum").value should be >= 0L }
 
-      "handle negNum" in { doGen[Long]("negNum").value should be <= 0l }
+      "handle negNum" in { doGen[Long]("negNum").value should be <= 0L }
 
       "handle const" in {
-        doGen[Long]("const: 15").value shouldBe 15l
-        doGen[Long]("const: -15").value shouldBe -15l
+        doGen[Long]("const: 15").value shouldBe 15L
+        doGen[Long]("const: -15").value shouldBe -15L
       }
 
       "handle range" in {
-        doGen[Long]("range: 5..7").value should (be >= 5l and be <= 7l)
+        doGen[Long]("range: 5..7").value should (be >= 5L and be <= 7L)
       }
 
       "handle oneof" in {
-        doGen[Long]("oneof: 1,2,3").value should (be >= 1l and be <= 3l)
+        doGen[Long]("oneof: 1,2,3").value should (be >= 1L and be <= 3L)
       }
 
       for { dfn <- List(
@@ -46,7 +44,7 @@ class LongMakeGenSpec extends AnyWordSpec {
         "alphaNumStr",
         "asciiStr",
         "asciiPrintableStr") }
-        s"not handle $dfn" in { doGen[Long](dfn) shouldBe 'left }
+        s"not handle $dfn" in { doGen[Long](dfn) shouldBe Symbol("left") }
     }
   }
 }
