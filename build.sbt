@@ -105,7 +105,7 @@ releaseProcess := Seq[ReleaseStep](
   pushChanges)
 
 libraryDependencies ++= Seq(
-  "org.scalacheck" %% "scalacheck" % "1.15.1",
+  "org.scalacheck" %% "scalacheck" % "1.15.2",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.scalatest" %% "scalatest" % "3.2.3" % Test)
 
