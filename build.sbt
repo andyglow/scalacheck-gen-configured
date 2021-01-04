@@ -22,7 +22,7 @@ scalaVersion := (ScalaVer.fromEnv getOrElse ScalaVer.default).full
 
 crossScalaVersions := ScalaVer.values.map(_.full)
 
-scalaV := ScalaVer.fromString(scalaVersion.value) getOrElse ScalaVer.default)
+scalaV := ScalaVer.fromString(scalaVersion.value) getOrElse ScalaVer.default
 
 scalacOptions := CompilerOptions(scalaV.value)
 
