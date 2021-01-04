@@ -50,7 +50,7 @@ val myEventGen = for {
 } yield MyEvent(id, timeStamp, message)
 ```   
 
-With this solution the only think I need is to restart data generation with desired system properties set. 
+With this solution the only thing I need is to restart data generation with desired system properties set. 
 (`-Didentifier=alphaNumStr -Dtime-stamp="range: 2018-04-04T00:00Z .. 2018-04-14T23:59Z"`) 
 
 The project is in it's initial phase so do not expect too much form it yet please.
@@ -87,7 +87,7 @@ val Right(timestampGen) = ParseGen[java.time.Instant]("range: 2018-01-01T00:00Z 
 ```
     
 ## Definitions
-Below is a table showing whtcj definitions can be supported by types.  
+Below is a table showing which definitions can be supported by types.  
 
 |                      | Numeric types | Char | String | Boolean | Date types | Duration |
 | -------------------- | ------------- | ---- | ------ | ------- | ---------- | -------- |
