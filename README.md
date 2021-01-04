@@ -1,9 +1,7 @@
 # Scalacheck `Gen[T]` configurator
 
-[![Build Status](https://travis-ci.org/andyglow/scalacheck-gen-configured.svg)](https://travis-ci.org/andyglow/scalacheck-gen-configured)
-![Maven Central 2.11](https://img.shields.io/maven-central/v/com.github.andyglow/scalacheck-gen-configured_2.11.svg)
-![Maven Central 2.12](https://img.shields.io/maven-central/v/com.github.andyglow/scalacheck-gen-configured_2.12.svg)
-[![Coverage Status](https://coveralls.io/repos/github/andyglow/scalacheck-gen-configured/badge.svg?branch=master)](https://coveralls.io/github/andyglow/scalacheck-gen-configured?branch=master)
+[![Build Status](https://cloud.drone.io/api/badges/andyglow/scalacheck-gen-configured/status.svg)](https://cloud.drone.io/andyglow/scalacheck-gen-configured)
+[![codecov](https://codecov.io/gh/andyglow/scalacheck-gen-configured/branch/master/graph/badge.svg?token=LRRSC6V0RE)](https://codecov.io/gh/andyglow/scalacheck-gen-configured)
 
 With this project you can externalize `Gen[T]` configuration. 
 
