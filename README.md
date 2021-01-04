@@ -2,6 +2,7 @@
 
 [![Build Status](https://cloud.drone.io/api/badges/andyglow/scalacheck-gen-configured/status.svg)](https://cloud.drone.io/andyglow/scalacheck-gen-configured)
 [![codecov](https://codecov.io/gh/andyglow/scalacheck-gen-configured/branch/master/graph/badge.svg?token=LRRSC6V0RE)](https://codecov.io/gh/andyglow/scalacheck-gen-configured)
+[![mvn](https://img.shields.io/badge/dynamic/json.svg?label=mvn&query=%24.response.docs%5B0%5D.latestVersion&url=https%3A%2F%2Fsearch.maven.org%2Fsolrsearch%2Fselect%3Fq%3Dscalacheck-gen-configured_2.13%26start%3D0%26rows%3D1)](https://search.maven.org/artifact/com.github.andyglow/scalacheck-gen-configured_2.13/)
 
 With this project you can externalize `Gen[T]` configuration. 
 
