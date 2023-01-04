@@ -26,7 +26,7 @@ scalaV := ScalaVer.fromString(scalaVersion.value) getOrElse ScalaVer.default
 
 scalacOptions := CompilerOptions(scalaV.value)
 
-scalacOptions in (Compile,doc) ++= Seq(
+Compile / doc / scalacOptions ++= Seq(
   "-groups",
   "-implicits",
   "-no-link-warnings")
@@ -76,16 +76,16 @@ libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.scalatest" %% "scalatest" % "3.2.8" % Test)
 
-sourceGenerators in Compile += Def.task {
-  val v = (scalaVersion in Compile).value
-  val s = (sourceManaged in Compile).value
+Compile / sourceGenerators  += Def.task {
+  val v = (Compile / scalaVersion).value
+  val s = (Compile / sourceManaged).value
 
   Boiler.gen(s, v)
 }
 
-mappings in (Compile, packageSrc) ++= {
-  val base = (sourceManaged in Compile).value
-  (managedSources in Compile).value.map { file =>
+Compile / packageSrc / mappings ++= {
+  val base = (Compile / sourceManaged).value
+  (Compile / managedSources).value.map { file =>
     file -> file.relativeTo(base).get.getPath
   }
 }
