@@ -3,8 +3,16 @@ name: CI
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - '**.md'
+    branches-ignore:
+      - "gh-pages"
   pull_request:
     branches: [ "master" ]
+    paths-ignore:
+      - '**.md'
+    branches-ignore:
+      - "gh-pages"
 
 permissions:
   contents: read
