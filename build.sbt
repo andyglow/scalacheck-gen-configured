@@ -71,10 +71,17 @@ releaseProcess := Seq[ReleaseStep](
   ReleaseStep(action = Command.process("sonatypeReleaseAll", _), enableCrossBuild = true),
   pushChanges)
 
-libraryDependencies ++= Seq(
-  "org.scalacheck" %% "scalacheck" % "1.17.0",
-  "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "org.scalatest" %% "scalatest" % "3.2.14" % Test)
+libraryDependencies ++= {
+  val scalacheckV = CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, 11)) => "1.15.2"
+    case _             => "1.17.0"
+  }
+
+  Seq(
+    "org.scalacheck" %% "scalacheck" % scalacheckV,
+    "org.scala-lang" % "scala-reflect" % scalaVersion.value,
+    "org.scalatest" %% "scalatest" % "3.2.14" % Test)
+}
 
 Compile / sourceGenerators  += Def.task {
   val v = (Compile / scalaVersion).value
