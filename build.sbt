@@ -74,7 +74,7 @@ releaseProcess := Seq[ReleaseStep](
 libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.15.2",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "org.scalatest" %% "scalatest" % "3.2.8" % Test)
+  "org.scalatest" %% "scalatest" % "3.2.9" % Test)
 
 Compile / sourceGenerators  += Def.task {
   val v = (Compile / scalaVersion).value
