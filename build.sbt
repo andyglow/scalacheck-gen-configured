@@ -80,7 +80,7 @@ libraryDependencies ++= {
   Seq(
     "org.scalacheck" %% "scalacheck" % scalacheckV,
     "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-    "org.scalatest" %% "scalatest" % "3.2.14" % Test)
+    "org.scalatest" %% "scalatest" % "3.2.15" % Test)
 }
 
 Compile / sourceGenerators  += Def.task {
